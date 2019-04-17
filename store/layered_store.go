@@ -476,8 +476,14 @@ func (s *LayeredGroupStore) GetGroupsByChannel(channelId string, page, perPage i
 	})
 }
 
-func (s *LayeredGroupStore) GetGroupsByTeam(teamId string, page, perPage int) StoreChannel {
+func (s *LayeredGroupStore) GetGroupsByTeam(teamId string, page, perPage *int, opts model.GroupSearchOpts) StoreChannel {
 	return s.RunQuery(func(supplier LayeredStoreSupplier) *LayeredStoreSupplierResult {
-		return supplier.GetGroupsByTeam(s.TmpContext, teamId, page, perPage)
+		return supplier.GetGroupsByTeam(s.TmpContext, teamId, page, perPage, opts)
+	})
+}
+
+func (s *LayeredGroupStore) GetGroupsPage(page, perPage int, opts model.GroupSearchOpts) StoreChannel {
+	return s.RunQuery(func(supplier LayeredStoreSupplier) *LayeredStoreSupplierResult {
+		return supplier.GetGroupsPage(s.TmpContext, page, perPage, opts)
 	})
 }
